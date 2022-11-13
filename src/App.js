@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import LoginButton from './login';
+import LogoutButton from './logout';
+import Profile from './profile';
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from 'react';
 
 function App() {
+  const {getAccessTokenSilently} = useAuth0();
+  const getAccessToken = async ()=> {
+    try{
+      const token = await getAccessTokenSilently();
+      console.log("acces token",token);
+    }
+    catch(e){
+      console.log(e);
+    }
+
+  }
+
+  useEffect(()=> {
+    getAccessToken();
+  }, [getAccessTokenSilently])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hi</h1>
+      <LoginButton></LoginButton>
+      <LogoutButton></LogoutButton>
+      <Profile></Profile>
     </div>
   );
 }
